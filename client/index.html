@@ -4,6 +4,8 @@
 <head>
 
   <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.2/dist/tf.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
 
 
   <!--  may be used for server client communication later -->
@@ -26,24 +28,10 @@
       <input type="file" id="files" name="files[]" accept=".png" />
       <output id="list"></output>
 
-      <script>
-        function handleFileSelect(evt) {
-          var files = evt.target.files; // FileList object
-
-          // files is a FileList of File objects. List some properties.
-          var output = [];
-          for (var i = 0, f; f = files[i]; i++) {
-            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-              f.size, ' bytes, last modified: ',
-              f.lastModifiedDate.toLocaleDateString(), '</li>');
-          }
-          document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-        }
-
-        document.getElementById('files').addEventListener('change', handleFileSelect, false);
-      </script>
+      <script type="text/javascript" src="js/image.js"></script>
 
     </div>
   </div>
 </body>
+
 </html>
