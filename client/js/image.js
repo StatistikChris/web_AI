@@ -1,24 +1,18 @@
 // import * as tf from '@tensorflow/tfjs';
 
 async function load_model() {
-
   // const model = tf.model.load('./model_fashion_mnist.h5');
   console.log("Loading tf model...")
   const model = await tf.loadLayersModel('https://github.com/StatistikChris/portfolio/blob/master/model_fashion_mnist.h5?raw=true');
   console.log("Model successfully loaded.")
   return model;
-
 }
 
 /*
 Create function that takes model and image and returns the class
 */
-
-
 async function show_prediction(model, image) {
-
   const output = model.predict(image);
-
   return output
 }
 
@@ -35,7 +29,7 @@ function handleFileSelect(evt) {
     console.log('successfully loaded file:');
     console.log(f);
   }else{
-    console.err('Error: could not load file');
+    console.log('Error: could not load file');
     return;
   }
 
