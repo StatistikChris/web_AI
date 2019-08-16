@@ -3,34 +3,47 @@
 
 <head>
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> -->
 
+
+  <!--  may be used for server client communication later -->
+  <!--
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-
-<!--
   <script type="text/javascript" src="js/simpleUpload.min.js"></script>
   <script type="text/javascript" src="js/simgpick.js"></script>
    -->
 
-
-
 </head>
 
 <body>
-
-
   <div class="col-sm-12 col-md-12" style="padding: 70px 0 0 70px;">
     <div class="row">
 
       <h3>Upload an image:</h3>
       <p>(File upload is limited to x MB)</p>
 
-      <input type="file" name="file">
+      <!-- <input type="file" name="file"> -->
+      <input type="file" id="files" name="files[]" accept=".png" multiple />
+      <output id="list"></output>
+
+      <script>
+        function handleFileSelect(evt) {
+          var files = evt.target.files; // FileList object
+
+          // files is a FileList of File objects. List some properties.
+          var output = [];
+          for (var i = 0, f; f = files[i]; i++) {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+              f.size, ' bytes, last modified: ',
+              f.lastModifiedDate.toLocaleDateString(), '</li>');
+          }
+          document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+        }
+
+        document.getElementById('files').addEventListener('change', handleFileSelect, false);
+      </script>
 
     </div>
   </div>
-
 </body>
-
 </html>
