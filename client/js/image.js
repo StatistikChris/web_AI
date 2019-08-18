@@ -78,27 +78,25 @@ function handleFileSelect(evt) {
     return;
   }
 
-  // resize f
-  // resizeImage(file);
-
-  // Create an image
-  var img = document.createElement("img");
-  // Create a file reader
-  var reader = new FileReader();
-  // Set the image once loaded into file reader
-
-  var canvas = document.createElement("canvas");
-  //var canvas = $("<canvas>", {"id":"testing"})[0];
-  var ctx = canvas.getContext("2d");
-  ctx.drawImage(img, 0, 0, 100, 100);
-
-  var dataurl = canvas.toDataURL("image/png");
-  // document.getElementById('output').src = dataurl;
-
-  // Load files into file reader
-  reader.readAsDataURL(file);
-
-
+  // // resize f
+  // // resizeImage(file);
+  //
+  // // Create an image
+  // var img = document.createElement("img");
+  // // Create a file reader
+  // var reader = new FileReader();
+  // // Set the image once loaded into file reader
+  //
+  // var canvas = document.createElement("canvas");
+  // //var canvas = $("<canvas>", {"id":"testing"})[0];
+  // var ctx = canvas.getContext("2d");
+  // ctx.drawImage(img, 0, 0, 100, 100);
+  //
+  // var dataurl = canvas.toDataURL("image/png");
+  // // document.getElementById('output').src = dataurl;
+  //
+  // // Load files into file reader
+  // reader.readAsDataURL(file);
 
   var output = [];
   output.push('<li><strong>', escape(file.name), '</strong> (', file.type || 'n/a', ') - ',
