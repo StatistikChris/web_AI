@@ -25,6 +25,7 @@ function InitThis() {
 }
 
 function Draw(x, y, isDown) {
+    console.log(x,y)
     if (isDown) {
         ctx.beginPath();
         ctx.strokeStyle = $('#selColor').val();
@@ -42,4 +43,4 @@ function clearArea() {
     // Use the identity matrix while clearing the canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-}
+}   
