@@ -22,10 +22,13 @@ function InitThis() {
 	    $('#myCanvas').mouseleave(function (e) {
         mousePressed = false;
     });
+
+    // add event listener to button:
+    document.getElementById('inferInput').addEventListener('cick', inferInput, false);
 }
 
 function Draw(x, y, isDown) {
-    console.log(x,y)
+    //console.log(x,y)
     if (isDown) {
         ctx.beginPath();
         ctx.strokeStyle = $('#selColor').val();
@@ -43,4 +46,28 @@ function clearArea() {
     // Use the identity matrix while clearing the canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+}
+
+function inferInput() {
+    clearPrint();
+    print("# --- Building Inference ---")
 }   
+
+/*
+    Add text in the html view
+*/
+const print = function (text) {
+    let el = document.getElementsByClassName('output')[0];
+    let elem = document.createElement('p');
+    elem.innerHTML = text;
+    el.append(elem);
+    el.append(document.createElement('br'))
+    console.log(text)
+};
+/*
+    Clear the html view
+*/
+const clearPrint = function () {
+    let el = document.getElementsByClassName('output')[0];
+    el.innerHTML = "";
+}
