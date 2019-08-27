@@ -1,1 +1,43 @@
-include canvas.html
+//include canvas.html
+
+doctype html
+html(lang='en')  
+  head  
+    title Canvas Drawing  
+    style
+      include css/style.css 
+    script
+      include js/canvas.js 
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
+  body!= body  
+    h2 Draw a number on the canvas below:
+    p
+        div(align="left")
+          canvas(id="myCanvas",width="500",height="200",style="border:2px solid black")
+        br/
+        input(
+          type="button" 
+          id="clearArea" 
+          value="Clear Area"
+          onclick="javascript:clearArea();return false;"
+        )
+        p Line width 
+          select(id="selWidth")
+            option(value="3") 3
+            option(value="1") 1
+            option(value="5") 5
+            option(value="7") 7
+            option(value="9",selected="selected") 9
+            option(value="11") 11
+        
+        p Color
+          select(id="selColor")
+            option(value="black",selected="selected") black
+
+
+    p
+      input(
+        type="button" 
+        id="detect" 
+        value="Detect"
+      )
