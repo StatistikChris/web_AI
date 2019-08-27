@@ -1,0 +1,18 @@
+doctype html
+html(lang='en')  
+  head  
+    title Canvas Image Recognition  
+    style
+      include css/style.css 
+  body!= body  
+    h2 Draw a number in the canvas area:
+    p
+      include canvas.html
+    p
+      input(
+        type="button" 
+        id="detect" 
+        value="Detect"
+      )
+    script
+      include js/script.js 
