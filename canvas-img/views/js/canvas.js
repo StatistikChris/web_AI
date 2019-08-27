@@ -2,7 +2,7 @@ var mousePressed = false;
 var lastX, lastY;
 var ctx;
 
-function InitThis() {
+function startup() {
     ctx = document.getElementById('myCanvas').getContext("2d");
 
     $('#myCanvas').mousedown(function (e) {

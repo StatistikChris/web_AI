@@ -4,12 +4,13 @@ doctype html
 html(lang='en')  
   head  
     title Canvas Drawing  
+    link(src="https://fonts.googleapis.com/css?family=Roboto",rel='stylesheet')
     style
       include css/style.css 
     script
       include js/canvas.js 
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
-  body(onload="InitThis();") 
+    script(src="https://code.jquery.com/jquery-3.4.1.min.js")
+  body(onload="startup();",font-family="Roboto") 
     h2 Draw a number on the canvas below:
     p
       div(align="left")
