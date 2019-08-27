@@ -1,0 +1,20 @@
+doctype html
+html(lang='en')  
+  head  
+    title Image Recognition  
+    style
+      include css/style.css 
+  body!= body  
+    h2 Upload a file
+    //img(src="static/image.png") 
+    p
+      img(src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Pincerno_-_Einkommen_2010.png/800px-Pincerno_-_Einkommen_2010.png", width='400px') 
+    //img.className#IdName(src="/image.png" alt="Image Title")
+    p
+      input(
+        type="button" 
+        id="imgupload" 
+        value="Upload"
+      )
+    script
+      include js/script.js 
