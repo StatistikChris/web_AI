@@ -24,12 +24,12 @@ html(lang='en')
       )
       p Line width 
         select(id="selWidth")
-          option(value="1") 1
           option(value="3") 3
-          option(value="5") 5
-          option(value="7") 7
-          option(value="9") 9
-          option(value="11",selected="selected") 11
+          option(value="11") 11
+          option(value="13") 13
+          option(value="15",selected="selected") 15
+          option(value="17") 17
+          option(value="19") 19
       
       p Color
         select(id="selColor")
@@ -39,8 +39,17 @@ html(lang='en')
     p
       input(
         type="button" 
-        id="inferInput" 
-        value="Detect"
-        onclick="inferInput()"
+        id="prepareInput" 
+        value="Prepare"
+        onclick="prepareInput()"
       )
     div(class="output")
+    div(id="preview-container")  
+      p Preview:
+      div(id="preview")
+    input(
+        type="button" 
+        id="buildInference" 
+        value="Infer"
+        onclick="javascript:buildInference();"
+      )
