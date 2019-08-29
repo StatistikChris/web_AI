@@ -1,6 +1,22 @@
+/*
+    canvas.js
+*/
+//import * as tf from '@tensorflow/tfjs-node'
+
+//const tf = require('@tensorflow/tfjs');
+//require('@tensorflow/tfjs-node');
+
 var mousePressed = false;
 var lastX, lastY;
 var ctx;
+
+// load model on starup
+let model;
+(async function () {
+    model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/VGG16/model.json");
+    $(".progress-bar").hide();
+})();
+
 
 function startup() {
     ctx = document.getElementById('myCanvas').getContext("2d");
@@ -26,6 +42,8 @@ function startup() {
     // add event listener to button:
     document.getElementById('prepareInput').addEventListener('cick', prepareInput, false);
     document.getElementById('buildInference').addEventListener('cick', buildInference, false);
+
+
 }
 
 function Draw(x, y, isDown) {
@@ -64,11 +82,13 @@ const showPreview = function(canvasId) {
 
 function prepareInput() {
     clearPrint();
-    logPrint("# --- Building Inference ---");
+    //logPrint("# --- Building Inference ---");
     logPrint("# --- reseizing image...");
     //var newImg = rescaleImage("myCanvas")
     //var newImg = resizeImage2("myCanvas")
     var newImg = format2("myCanvas");
+    logPrint("\n# --- formatting image...");
+    logPrint("\n# --- showing preview:");
     print(newImg);
     
     //print("# --- formating image...");
@@ -114,12 +134,45 @@ function resizeTo(canvas,pct){
 
 const buildInference =  function() {
     //
-    console.log("Button")
-    var canvas = document.getElementById("preview-pic");
-    var context = canvas.getContext("2d");
+    console.log("\n# --- Building Inference ---")
     // sendRequest();
+    infer();
 }
 
+async function infer() {
+    //let image = $("#selected-image").get(0);
+    var canvas = document.getElementById("preview");
+    var dataURL = canvas.toDataURL();
+
+    let image = dataURL;
+    let tensor = tf.browser.fromPixels(image)
+                  .resizeNearestNeighbor([224, 224])
+                  .toFloat()
+                  .expandDims();
+
+  // More pre-processing to be added here later
+  
+  
+  let predictions = await model.predict(tensor).data();
+  let top5 = Array.from(predictions)
+      .map(function (p, i) {
+          return {
+              probability: p,
+              className: IMAGENET_CLASSES[i]
+          };
+      }).sort(function (a, b) {
+          return b.probability - a.probability;
+      }).slice(0, 5);
+      
+      
+  
+
+  $("#prediction-list").empty();
+  top5.forEach(function (p) {
+      $("#prediction-list").append(`<li>${p.className}: ${p.probability.toFixed(6)}</li>`);
+  });
+
+}
 
 const format2 = function(canvasId) {
     var dimension = 28;
