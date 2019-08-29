@@ -133,7 +133,7 @@ function resizeTo(canvas,pct){
 
 const buildInference =  function() {
     //
-    console.log("\n# --- Building Inference ---")
+    logPrint("\n# --- Building Inference ---")
     // sendRequest();
     infer();
 }
@@ -144,33 +144,17 @@ async function infer() {
     var dataURL = canvas.toDataURL();
 
     let image = dataURL;
-    let tensor = tf.browser.fromPixels(image)
-                  .resizeNearestNeighbor([224, 224])
+    let tensor = tf.browser.fromPixels(image,numChannels=1)
+                  .resizeNearestNeighbor([28, 28])
                   .toFloat()
                   .expandDims();
 
-  // More pre-processing to be added here later
-  
-  
-  let predictions = await model.predict(tensor).data();
-  let top5 = Array.from(predictions)
-      .map(function (p, i) {
-          return {
-              probability: p,
-              className: IMAGENET_CLASSES[i]
-          };
-      }).sort(function (a, b) {
-          return b.probability - a.probability;
-      }).slice(0, 5);
-      
-      
-  
+    let predictions = await model.predict(tensor).data();
 
-  $("#prediction-list").empty();
-  top5.forEach(function (p) {
-      $("#prediction-list").append(`<li>${p.className}: ${p.probability.toFixed(6)}</li>`);
-  });
-
+    $("#prediction-list").empty();
+    predictions.forEach(function (p) {
+        $("#prediction-list").append(`<li>${p}</li>`);
+    });
 }
 
 const format2 = function(canvasId) {

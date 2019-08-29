@@ -5,10 +5,10 @@ html(lang='en')
     link(src="https://fonts.googleapis.com/css?family=Roboto",rel='stylesheet')
     style
       include css/style.css 
+    script(src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2.7")
     script(type="text/javascript")
       include js/canvas.js 
     script(src="https://code.jquery.com/jquery-3.4.1.min.js")
-    script(src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2.7")
   body(onload="startup();",font-family="Roboto") 
     div(class="site")
       div(class="site-border")
