@@ -1,0 +1,65 @@
+doctype html
+html(lang='en')  
+  head  
+    title Canvas Drawing  
+    link(src="https://fonts.googleapis.com/css?family=Roboto",rel='stylesheet')
+    style
+      include css/style.css 
+    script(src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2.7")
+    script(type="text/javascript")
+      include js/canvas.js 
+    script(src="https://code.jquery.com/jquery-3.4.1.min.js")
+  body(onload="startup();",font-family="Roboto") 
+    div(class="site")
+      div(class="site-border")
+        span(class="site-width")
+        div(class="site-header")
+          h2 Draw a number on the canvas below
+        div(class="site-midarea")
+          div(class="canvas-box")
+            canvas(id="myCanvas",width="280",height="280",style="border:2px solid black")
+          div(class="ctrl-box")
+            input(
+              type="button" 
+              id="clearArea" 
+              value="Clear Area"
+              onclick="javascript:clearArea();return false;"
+            )
+            // hidden options (see css)
+            select(id="selWidth")
+              option(value="3") 3
+              option(value="11") 11
+              option(value="13") 13
+              option(value="15") 15
+              option(value="17") 17
+              option(value="19",selected="selected") 19
+            
+            select(id="selColor")
+              option(value="black",selected="selected") black
+            input(
+              type="button" 
+              id="prepareInput" 
+              value="Prepare"
+              onclick="prepareInput()"
+            )
+            input(
+              type="button" 
+              id="buildInference" 
+              value="Infer"
+              onclick="javascript:buildInference();"
+            )
+            div(class="output-container")
+              div(class="output-log")
+                textarea(class="logging-area",id="logging-area",style="width: 350px; height: 120px;",align="bottom",readonly)
+              div(class="output-preview")
+                div(id="preview")
+        div(class="site-out-box")
+
+          // TODO: remove old output tag and js functions
+          div(class="output") 
+          div(id="preview-container")  
+          div(class="prediction")
+             ol(id="prediction-list")
+        div(class="site-footer")
+          div(class="pfooter")
+            p about | contact

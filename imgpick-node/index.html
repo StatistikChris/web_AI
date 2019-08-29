@@ -1,0 +1,45 @@
+<html>
+<head>
+	<title>Image Recognition</title>
+</head>
+<body>
+
+<h1>JS - File Upload - 3</h1>
+<main>
+    <p>Wählen Sie Dateien aus. Von Bildern werden previewbilder erzeugt.</p>
+    <input type="file" id="files" name="files[]" multiple />
+    <output id="list"></output>
+</main>
+<script>
+    function filepicker(evt) {
+            var dateien = evt.target.files; // FileList object
+            // Auslesen der gespeicherten Dateien durch Schleife
+            for (var i = 0, f; f = dateien[i]; i++) {
+                // nur Bild-Dateien
+                if (!f.type.match('image.*')) {
+                    continue;
+                }
+                var reader = new FileReader();
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        // erzeuge Thumbnails.
+                        var preview = document.createElement('img');
+                        preview.className = 'preview';
+                        preview.src = e.target.result;
+                        preview.title = theFile.name;
+                        document.getElementById('list')
+                            .insertBefore(preview, null);
+                    };
+                })(f);
+                // Bilder als Data URL auslesen.
+                reader.readAsDataURL(f);
+            }
+        }
+        // Auf neue Auswahl reagieren und gegebenenfalls Funktion filepicker neu ausführen.
+    document.getElementById('files')
+        .addEventListener('change', filepicker, false);
+
+</script>	
+
+</body>
+</html>

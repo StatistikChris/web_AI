@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1566996601063.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "7970A03D",
+    "lastKnownWriteTime" : 1566999208,
+    "last_content_update" : 1566999208,
+    "path" : "~/portfolio/webapps/tfjs/TensorFlowJS/local-server/package.json",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "7,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "json"
+}

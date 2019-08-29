@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1566996995898.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8E7681DB",
+    "lastKnownWriteTime" : 1566999431,
+    "last_content_update" : 1566999432043,
+    "path" : "~/portfolio/webapps/tfjs/TensorFlowJS/local-server/server.js",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "12,3",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "js"
+}
