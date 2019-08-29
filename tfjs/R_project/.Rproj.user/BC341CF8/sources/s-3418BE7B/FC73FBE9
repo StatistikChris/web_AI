@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1567001789255.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3926392022",
+    "id" : "FC73FBE9",
+    "lastKnownWriteTime" : 1567007812,
+    "last_content_update" : 1567007813213,
+    "path" : "~/portfolio/webapps/tfjs/TensorFlowJS/static/predict.js",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "20,43",
+        "scrollLine" : "8",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "js"
+}
