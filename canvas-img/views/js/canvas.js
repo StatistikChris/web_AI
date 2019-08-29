@@ -1,6 +1,7 @@
 /*
     canvas.js
 */
+
 var mousePressed = false;
 var lastX, lastY;
 var ctx;
@@ -8,7 +9,14 @@ var ctx;
 // load model on starup
 let model;
 (async function () {
-    model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+    // ################################################### Caution here when deploying vvvvvvvvvvvvvvv
+    //if(process.env.ENV_APP_ENGINE) {
+    if("{{ env('ENV_APP_ENGINE') }}" == "appengine") {
+        model = await tf.loadLayersModel("https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json");
+    } else {
+        model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+    }
+    // ################################################### ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     logPrint("# [INFO]: Loading Tensoflow Model ...");
     logPrint("\n# [INFO]: done");
     //$(".progress-bar").hide();
@@ -94,10 +102,6 @@ const rescaleImage = function(canvasId,dimension=28) {
     return context.getImageData(0, 0, canvas.width*scaleFactor, canvas.height*scaleFactor);
 }
 
-function resizeTo(canvas,pct){
-
-}
-
 function buildInference() {
     // just log here and call async function
     logPrint("\n# [INFO]: building inference...");
@@ -116,6 +120,7 @@ async function infer() {
 
     let predictions = await model.predict(tensor).data();
 
+    $("#prediction-title").append("Result:");
     $("#prediction-list").empty();
     predictions.forEach(function (p) {
         $("#prediction-list").append(`<li>${p}</li>`);
@@ -127,8 +132,6 @@ const format = function(canvasId) {
     var dimension = 28;
     var canvas = document.getElementById(canvasId);
     var context = canvas.getContext("2d");
-
-    console.log("old image context: \n" + context.getImageData(0, 0, canvas.width, canvas.height));
 
     var tempCanvas = document.createElement("canvas");
     var tmptContext = tempCanvas.getContext("2d");
