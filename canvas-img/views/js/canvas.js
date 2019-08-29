@@ -64,8 +64,8 @@ const showPreview = function(canvasId) {
 
 function prepareInput() {
     clearPrint();
-    print("# --- Building Inference ---");
-    print("# --- reseizing image...");
+    logPrint("# --- Building Inference ---");
+    logPrint("# --- reseizing image...");
     //var newImg = rescaleImage("myCanvas")
     //var newImg = resizeImage2("myCanvas")
     var newImg = format2("myCanvas");
@@ -75,6 +75,10 @@ function prepareInput() {
     //var arrayImg = formatImage(newImg);
     //print(arrayImg)
 }   
+
+const logPrint = function(text) {
+    $('#logging-area').append(text);
+}
 
 /*
     Add text in the html view
