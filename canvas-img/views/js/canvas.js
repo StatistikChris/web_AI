@@ -8,8 +8,9 @@ var ctx;
 // load model on starup
 let model;
 (async function () {
-    model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/VGG16/model.json");
-    $(".progress-bar").hide();
+    model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+    //$(".progress-bar").hide();
+    logPrint("# --- Loading Tensoflow Model ...");
 })();
 
 
@@ -37,8 +38,6 @@ function startup() {
     // add event listener to button:
     document.getElementById('prepareInput').addEventListener('cick', prepareInput, false);
     document.getElementById('buildInference').addEventListener('cick', buildInference, false);
-
-
 }
 
 function Draw(x, y, isDown) {
@@ -135,10 +134,22 @@ const buildInference =  function() {
 
 async function infer() {
     //let image = $("#selected-image").get(0);
-    var canvas = document.getElementById("preview");
-    var dataURL = canvas.toDataURL();
+    const canvas = document.getElementById("preview-pic");
+    //const ctx = canvas.getContext('2d');
 
-    let image = dataURL;
+    //var imgData = canvas.src;
+    //console.log(canvas.toDataURL("image/png"));
+
+    var imgData = new Image()
+    //ctx.drawImage(img, 0, 0);
+    imgData.src = canvas.src;
+    //image = tf.fromPixels(canvas);
+
+
+
+
+
+    let image = imgData;
     let tensor = tf.browser.fromPixels(image,numChannels=1)
                   .resizeNearestNeighbor([28, 28])
                   .toFloat()
@@ -208,127 +219,5 @@ const format2 = function(canvasId) {
     }
     return imgArray;
     */
-}
-
-const format = function(canvasId) {
-    var dimension = 28;
-    var canvas = document.getElementById(canvasId);
-    var context = canvas.getContext("2d");
-
-    // rescale
-    var scaleFactor = dimension / canvas.width; // e.g. 28 / 280 = 0.1
-    console.log("scale factor: " + scaleFactor);
-    context.scale(dimension, dimension);
-
-    // format
-    var imgData = context.getImageData(0, 0, canvas.width, canvas.height);
-    var imgArray = new Array();
-    var imgSubArray = new Array();
-    for(var i=0;i<imgData.length;i+=4) {
-            if ((i%(dimension*4))  == 0) {
-            // end of row: push pixel row and create new array object
-            //console.log("imgData.data.length % dimension == " + i)
-            imgArray.push(imgSubArray);
-            imgSubArray = new Array();
-            // jump rows in y axe
-            //i += canvas.width*4*(stepLength);
-        }
-        
-        // detect pixels
-        if (imgData.data[stepLength*i+3] > 0) {
-            imgSubArray.push(1);
-        }else{
-            imgSubArray.push(0);
-        }
-    }
-    return imgArray;
-}
-
-const resizeImage2 = function(canvasId,dimension=28) {
-    var canvas = document.getElementById(canvasId);
-    var context = canvas.getContext("2d");
-    var imgData = context.getImageData(0, 0, canvas.width, canvas.height);
-
-    var stepLength = canvas.width / dimension;
-    var newImageData = ctx.createImageData(dimension, dimension);
-    var imgArray = new Array();
-    var imgSubArray = new Array();
-
-    //for(var i=0; i < dimension*dimension*4; i+=4) {
-    for(var i=0; i < imgData.data.length; i+=4) {
-        //newImageData[i] = imgData[stepLength*i];
-        //newImageData[i+1] = imgData[stepLength*i+1];
-        //newImageData[i+2] = imgData[stepLength*i+2];
-        //newImageData[i+3] = imgData[stepLength*i+3];
-        if (i % (dimension*4) == 0) {
-            // push pixel row and create new array object
-            //console.log("imgData.data.length % dimension == " + i)
-            imgArray.push(imgSubArray);
-            imgSubArray = new Array();
-            // jump rows in y axe
-            i += canvas.width*4*(stepLength);
-        }
-        
-        // detect pixels
-        if (imgData.data[stepLength*i+3] > 0) {
-            imgSubArray.push(1);
-        }else{
-            imgSubArray.push(0);
-        }
-    
-    }
-    return imgArray;
-}
-
-const resizeImage = function(canvasId,dimension=28) {
-    var canvas = document.getElementById(canvasId);
-    var context = canvas.getContext("2d");
-    var imgData = context.getImageData(0, 0, canvas.width, canvas.height);
-
-    var i;
-    //var step = canvas.width % dimension
-    var newImageData = ctx.createImageData(dimension, dimension);
-    console.log("imgData.data[0] " + imgData.data[0])
-    console.log("imgData.data[1] " + imgData.data[1])
-    console.log("imgData.data[2] " + imgData.data[2])
-    console.log("imgData.data[3] " + imgData.data[3])
-    for (i = 0; i < imgData.data.length%(dimension*dimension); i += 4) {
-        // copy RGBA channels of the pixel
-        if (imgData.data[(dimension*dimension)*i+3] > 0) {
-            console.log("imgData.data[i] > " + imgData.data[i+1])
-        }
-        newImageData.data[i] = imgData.data[dimension*i];
-        newImageData.data[i+1] = imgData.data[dimension*i+1];
-        newImageData.data[i+2] = imgData.data[dimension*i+2];
-        newImageData.data[i+3] = imgData.data[dimension*i+3];
-
-    }
-    //ctx.putImageData(imgData, 0, 0)
-    return newImageData;
-}
-/*
-
-*/
-const formatImage = function(imgData,dimension=28) {
-    var i;
-    var imgArray = new Array();
-    var imgSubArray = new Array();
-    for (i = 0; i < imgData.data.length; i += 4) {
-        if (i % (dimension*4) == 0) {
-            // push pixel row and create new array object
-            //console.log("imgData.data.length % dimension == " + i)
-            imgArray.push(imgSubArray);
-            imgSubArray = new Array();
-        }
-        
-        // detect pixels
-        if (imgData.data[i+3] > 0) {
-            imgSubArray.push(1);
-        }else{
-            imgSubArray.push(0);
-        }
-    
-    }
-    return imgArray
 }
 

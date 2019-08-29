@@ -2,7 +2,133 @@
 <head></head>
 <body onload="InitThis();">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/canvas.js"></script>
+    <script type="text/javascript">
+// tmp save of deprecated functions
+
+        const format = function(canvasId) {
+    var dimension = 28;
+    var canvas = document.getElementById(canvasId);
+    var context = canvas.getContext("2d");
+
+    // rescale
+    var scaleFactor = dimension / canvas.width; // e.g. 28 / 280 = 0.1
+    console.log("scale factor: " + scaleFactor);
+    context.scale(dimension, dimension);
+
+    // format
+    var imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+    var imgArray = new Array();
+    var imgSubArray = new Array();
+    for(var i=0;i<imgData.length;i+=4) {
+            if ((i%(dimension*4))  == 0) {
+            // end of row: push pixel row and create new array object
+            //console.log("imgData.data.length % dimension == " + i)
+            imgArray.push(imgSubArray);
+            imgSubArray = new Array();
+            // jump rows in y axe
+            //i += canvas.width*4*(stepLength);
+        }
+        
+        // detect pixels
+        if (imgData.data[stepLength*i+3] > 0) {
+            imgSubArray.push(1);
+        }else{
+            imgSubArray.push(0);
+        }
+    }
+    return imgArray;
+}
+
+const resizeImage2 = function(canvasId,dimension=28) {
+    var canvas = document.getElementById(canvasId);
+    var context = canvas.getContext("2d");
+    var imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+    var stepLength = canvas.width / dimension;
+    var newImageData = ctx.createImageData(dimension, dimension);
+    var imgArray = new Array();
+    var imgSubArray = new Array();
+
+    //for(var i=0; i < dimension*dimension*4; i+=4) {
+    for(var i=0; i < imgData.data.length; i+=4) {
+        //newImageData[i] = imgData[stepLength*i];
+        //newImageData[i+1] = imgData[stepLength*i+1];
+        //newImageData[i+2] = imgData[stepLength*i+2];
+        //newImageData[i+3] = imgData[stepLength*i+3];
+        if (i % (dimension*4) == 0) {
+            // push pixel row and create new array object
+            //console.log("imgData.data.length % dimension == " + i)
+            imgArray.push(imgSubArray);
+            imgSubArray = new Array();
+            // jump rows in y axe
+            i += canvas.width*4*(stepLength);
+        }
+        
+        // detect pixels
+        if (imgData.data[stepLength*i+3] > 0) {
+            imgSubArray.push(1);
+        }else{
+            imgSubArray.push(0);
+        }
+    
+    }
+    return imgArray;
+}
+
+const resizeImage = function(canvasId,dimension=28) {
+    var canvas = document.getElementById(canvasId);
+    var context = canvas.getContext("2d");
+    var imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+    var i;
+    //var step = canvas.width % dimension
+    var newImageData = ctx.createImageData(dimension, dimension);
+    console.log("imgData.data[0] " + imgData.data[0])
+    console.log("imgData.data[1] " + imgData.data[1])
+    console.log("imgData.data[2] " + imgData.data[2])
+    console.log("imgData.data[3] " + imgData.data[3])
+    for (i = 0; i < imgData.data.length%(dimension*dimension); i += 4) {
+        // copy RGBA channels of the pixel
+        if (imgData.data[(dimension*dimension)*i+3] > 0) {
+            console.log("imgData.data[i] > " + imgData.data[i+1])
+        }
+        newImageData.data[i] = imgData.data[dimension*i];
+        newImageData.data[i+1] = imgData.data[dimension*i+1];
+        newImageData.data[i+2] = imgData.data[dimension*i+2];
+        newImageData.data[i+3] = imgData.data[dimension*i+3];
+
+    }
+    //ctx.putImageData(imgData, 0, 0)
+    return newImageData;
+}
+/*
+
+*/
+const formatImage = function(imgData,dimension=28) {
+    var i;
+    var imgArray = new Array();
+    var imgSubArray = new Array();
+    for (i = 0; i < imgData.data.length; i += 4) {
+        if (i % (dimension*4) == 0) {
+            // push pixel row and create new array object
+            //console.log("imgData.data.length % dimension == " + i)
+            imgArray.push(imgSubArray);
+            imgSubArray = new Array();
+        }
+        
+        // detect pixels
+        if (imgData.data[i+3] > 0) {
+            imgSubArray.push(1);
+        }else{
+            imgSubArray.push(0);
+        }
+    
+    }
+    return imgArray
+}
+
+
+    </script>
     <div align="center">
         <canvas id="myCanvas" width="500" height="200" style="border:2px solid black"></canvas>
         <br /><br />
