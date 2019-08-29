@@ -9,17 +9,26 @@ body {
 }
 h2 {
 	color: darkslategrey;
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 p {
 	font-family: 'Roboto', serif;
+	padding: 0px;
+	margin:0;
 }
 textarea { 
     overflow: auto; 
     resize: none;
     background: lightgray;
+    margin: 10px;
 } 
 select {
 	display: none; /* globally hide select option fields */
+}
+input {
+	margin: 10px;
 }
 
 /* dev flexbox definitions */
@@ -30,6 +39,11 @@ select {
 	justify-content: center;
 	align-items: stretch;
 	align-content: center;
+}
+.site-width {
+	display: inline-block;
+	min-width: 800px;
+	width: 800px;
 }
 .site-border {
 	order:1;
@@ -45,6 +59,7 @@ select {
 .site-header {
 	order: 1;
 	border: 1px solid #333;
+	background-color: #ededed;
 }
 .site-midarea {
 	order: 2;
@@ -52,7 +67,7 @@ select {
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	align-content: center;
 	border: 1px solid #333;
 }
@@ -61,6 +76,7 @@ select {
 	border: 1px solid #333;
 	order: 1;
 	flex: 0 1 400px;
+	padding: 15px;
 }
 .ctrl-box {
 	/* midarea 2 right */
@@ -78,10 +94,12 @@ select {
 .site-footer {
 	border: 1px solid #333;
 	order: 4;
+	background-color: #ededed;
+	padding: 0;
+	margin:0;
 }
-
-.site-width {
-	display: inline-block;
-	min-width: 800px;
-	width: 800px;
+.pfooter {
+	text-align:right;
+	padding: 10px;
+	margin:0;
 }

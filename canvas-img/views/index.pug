@@ -12,9 +12,9 @@ html(lang='en')
   body(onload="startup();",font-family="Roboto") 
     div(class="site")
       div(class="site-border")
+        span(class="site-width")
         div(class="site-header")
-          span(class="site-width")
-            h2 Draw a number on the canvas below
+          h2 Draw a number on the canvas below
         div(class="site-midarea")
           div(class="canvas-box")
             canvas(id="myCanvas",width="280",height="280",style="border:2px solid black")
@@ -49,14 +49,17 @@ html(lang='en')
               onclick="javascript:buildInference();"
             )
             div(class="output-container")
-              div(class="output-preview")  
-                div(id="preview")
               div(class="output-log")
-                textarea(class="logging-area",id="logging-area",style="width: 280px; height: 120px;",align="bottom",readonly)
+                textarea(class="logging-area",id="logging-area",style="width: 350px; height: 120px;",align="bottom",readonly)
+              div(class="output-preview")
+                div(id="preview")
         div(class="site-out-box")
-          div(class="output")
+
+          // TODO: remove old output tag and js functions
+          div(class="output") 
           div(id="preview-container")  
           div(class="prediction")
              ol(id="prediction-list")
         div(class="site-footer")
-          p about | contact
+          div(class="pfooter")
+            p about | contact

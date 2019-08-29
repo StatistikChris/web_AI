@@ -86,8 +86,8 @@ function prepareInput() {
     logPrint("# --- reseizing image...");
     //var newImg = rescaleImage("myCanvas")
     //var newImg = resizeImage2("myCanvas")
-    var newImg = format2("myCanvas");
     logPrint("\n# --- formatting image...");
+    var newImg = format2("myCanvas");
     //print(newImg);
     
     //print("# --- formating image...");
