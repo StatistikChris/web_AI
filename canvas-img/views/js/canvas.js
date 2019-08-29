@@ -69,13 +69,13 @@ function clearArea() {
 }
 
 const showPreview = function(canvasId) {
-    //$.post(url,, JSON)
+    logPrint("\n# --- showing preview:");
     var canvas = document.getElementById(canvasId);
     var data = canvas.toDataURL("image/png");
 
     var image = new Image();
     image.id = "preview-pic";
-    image.width = 280;
+    image.width = 70;
     image.src = canvas.toDataURL();
     document.getElementById('preview').appendChild(image);
 }
@@ -88,8 +88,7 @@ function prepareInput() {
     //var newImg = resizeImage2("myCanvas")
     var newImg = format2("myCanvas");
     logPrint("\n# --- formatting image...");
-    logPrint("\n# --- showing preview:");
-    print(newImg);
+    //print(newImg);
     
     //print("# --- formating image...");
     //var arrayImg = formatImage(newImg);

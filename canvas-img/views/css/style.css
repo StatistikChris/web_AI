@@ -1,6 +1,87 @@
+/* general html tag styles */
+body {
+  /* 
+  background: #ccc;
+  background: -webkit-linear-gradient(#ccc, #eee);
+  background:    -moz-linear-gradient(#ccc, #eee);
+  background:         linear-gradient(#ccc, #eee);
+  */
+}
 h2 {
 	color: darkslategrey;
 }
 p {
 	font-family: 'Roboto', serif;
+}
+textarea { 
+    overflow: auto; 
+    resize: none;
+    background: lightgray;
+} 
+select {
+	display: none; /* globally hide select option fields */
+}
+
+/* dev flexbox definitions */
+.site {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: center;
+}
+.site-border {
+	order:1;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: center;
+	border: 3px solid #4285F5;
+
+}
+.site-header {
+	order: 1;
+	border: 1px solid #333;
+}
+.site-midarea {
+	order: 2;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	border: 1px solid #333;
+}
+.canvas-box {
+	/* midarea 1 left */
+	border: 1px solid #333;
+	order: 1;
+	flex: 0 1 400px;
+}
+.ctrl-box {
+	/* midarea 2 right */
+	border: 1px solid #333;
+	order: 2;
+	
+}
+
+.site-out-box {
+	border: 1px solid #333;
+	order: 3;
+	
+}
+
+.site-footer {
+	border: 1px solid #333;
+	order: 4;
+}
+
+.site-width {
+	display: inline-block;
+	min-width: 800px;
+	width: 800px;
 }
