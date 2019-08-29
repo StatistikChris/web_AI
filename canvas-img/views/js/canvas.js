@@ -1,11 +1,6 @@
 /*
     canvas.js
 */
-//import * as tf from '@tensorflow/tfjs-node'
-
-//const tf = require('@tensorflow/tfjs');
-//require('@tensorflow/tfjs-node');
-
 var mousePressed = false;
 var lastX, lastY;
 var ctx;
