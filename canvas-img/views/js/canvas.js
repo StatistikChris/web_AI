@@ -120,7 +120,7 @@ async function infer() {
 
     let predictions = await model.predict(tensor).data();
 
-    $("#prediction-title").append("Result:");
+    $("#prediction-title").append("<br /><p>Result:</p>");
     $("#prediction-list").empty();
     predictions.forEach(function (p) {
         $("#prediction-list").append(`<li>${p}</li>`);
