@@ -9,8 +9,9 @@ var ctx;
 let model;
 (async function () {
     model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+    logPrint("# [INFO]: Loading Tensoflow Model ...");
+    logPrint("\n# [INFO]: done");
     //$(".progress-bar").hide();
-    logPrint("# --- Loading Tensoflow Model ...");
 })();
 
 
@@ -57,13 +58,14 @@ function Draw(x, y, isDown) {
 }
 	
 function clearArea() {
+    logPrint("\n# [INFO]: clearing draw area");
     // Use the identity matrix while clearing the canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
 const showPreview = function(canvasId) {
-    logPrint("\n# --- showing preview:");
+    logPrint("\n# [INFO]: showing preview");
     var canvas = document.getElementById(canvasId);
     var data = canvas.toDataURL("image/png");
 
@@ -75,41 +77,12 @@ const showPreview = function(canvasId) {
 }
 
 function prepareInput() {
-    clearPrint();
-    //logPrint("# --- Building Inference ---");
-    logPrint("# --- reseizing image...");
-    //var newImg = rescaleImage("myCanvas")
-    //var newImg = resizeImage2("myCanvas")
-    logPrint("\n# --- formatting image...");
-    var newImg = format2("myCanvas");
-    //print(newImg);
-    
-    //print("# --- formating image...");
-    //var arrayImg = formatImage(newImg);
-    //print(arrayImg)
+    logPrint("\n# [INFO]: reseizing image...");
+    var newImg = format("myCanvas");
 }   
 
 const logPrint = function(text) {
     $('#logging-area').append(text);
-}
-
-/*
-    Add text in the html view
-*/
-const print = function (text) {
-    let el = document.getElementsByClassName('output')[0];
-    let elem = document.createElement('p');
-    elem.innerHTML = text;
-    el.append(elem);
-    //el.append(document.createElement('br'))
-    console.log(text)
-};
-/*
-    Clear the html view
-*/
-const clearPrint = function () {
-    let el = document.getElementsByClassName('output')[0];
-    el.innerHTML = "";
 }
 
 const rescaleImage = function(canvasId,dimension=28) {
@@ -125,30 +98,16 @@ function resizeTo(canvas,pct){
 
 }
 
-const buildInference =  function() {
-    //
-    logPrint("\n# --- Building Inference ---")
-    // sendRequest();
+function buildInference() {
+    // just log here and call async function
+    logPrint("\n# [INFO]: building inference...");
     infer();
 }
 
 async function infer() {
-    //let image = $("#selected-image").get(0);
-    const canvas = document.getElementById("preview-pic");
-    //const ctx = canvas.getContext('2d');
-
-    //var imgData = canvas.src;
-    //console.log(canvas.toDataURL("image/png"));
-
+    var canvas = document.getElementById("preview-pic");
     var imgData = new Image()
-    //ctx.drawImage(img, 0, 0);
     imgData.src = canvas.src;
-    //image = tf.fromPixels(canvas);
-
-
-
-
-
     let image = imgData;
     let tensor = tf.browser.fromPixels(image,numChannels=1)
                   .resizeNearestNeighbor([28, 28])
@@ -161,18 +120,16 @@ async function infer() {
     predictions.forEach(function (p) {
         $("#prediction-list").append(`<li>${p}</li>`);
     });
+    logPrint("\n# [INFO]: done");
 }
 
-const format2 = function(canvasId) {
+const format = function(canvasId) {
     var dimension = 28;
     var canvas = document.getElementById(canvasId);
     var context = canvas.getContext("2d");
 
     console.log("old image context: \n" + context.getImageData(0, 0, canvas.width, canvas.height));
-    //var myCanvas=document.getElementById("canvas");
-    //var ctx=myCanvas.getContext("2d");
-    //var cw=canvas.width;
-    //var ch=canvas.height;
+
     var tempCanvas = document.createElement("canvas");
     var tmptContext = tempCanvas.getContext("2d");
     
@@ -181,43 +138,19 @@ const format2 = function(canvasId) {
     var ch=canvas.height;
     tempCanvas.width=cw;
     tempCanvas.height=ch;
-    tmptContext.drawImage(canvas,0,0);
-    canvas.width*=pct;
-    canvas.height*=pct;
+
+    //tmptContext.drawImage(canvas,0,0);
+    
+    tempCanvas.width*=pct;
+    tempCanvas.height*=pct;
 
 
-
+    logPrint("\n# [INFO]: formatting image...");
     context.drawImage(tempCanvas,0,0,cw,ch,0,0,cw*pct,ch*pct);
     var newCanvas = document.createElement("canvas");
     var newContext = newCanvas.getContext("2d");
     newContext.drawImage(tempCanvas,0,0,cw,ch,0,0,cw*pct,ch*pct);
 
     showPreview(canvasId);
-
-/*    
-    // format
-    var imgData = newContext.getImageData(0, 0, newCanvas.width, newCanvas.height);
-    console.log("new image context: \n" + imgData.length);
-    var imgArray = new Array();
-    var imgSubArray = new Array();
-    for(var i=0;i<imgData.length;i+=4) {
-            if ((i%(dimension*4))  == 0) {
-            // end of row: push pixel row and create new array object
-            //console.log("imgData.data.length % dimension == " + i)
-            imgArray.push(imgSubArray);
-            imgSubArray = new Array();
-            // jump rows in y axe
-            //i += canvas.width*4*(stepLength);
-        }
-        
-        // detect pixels
-        if (imgData.data[stepLength*i+3] > 0) {
-            imgSubArray.push(1);
-        }else{
-            imgSubArray.push(0);
-        }
-    }
-    return imgArray;
-    */
 }
 
