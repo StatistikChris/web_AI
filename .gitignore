@@ -3,3 +3,4 @@ node_modules/
 tfjs/tfjs-models/
 R_project/
 *.DS_Store
+.DS_Store
