@@ -1,5 +1,3 @@
-console.log('PUG include works');
-
 function post(path, params, method='post') {
 
   // The rest of this code assumes you are not using a library.
@@ -29,4 +27,24 @@ function handleUpload(evt) {
   console.log("ok");
 }
 
-document.getElementById('imgupload').addEventListener('click', handleUpload, false);
+const showPreview = function () {
+    logPrint("# [INFO]: file picked\n");
+    logPrint("# [INFO]: showing preview\n");
+    var canvas = document.getElementById("preview-canvas");
+    //var data = canvas.toDataURL("image/png");
+
+    var image = new Image();
+    image.id = "preview-pic";
+    image.width = 70;
+    image.src = canvas.toDataURL();
+    document.getElementById('preview').appendChild(image);
+}
+
+const logPrint = function(text) {
+    $('#logging-area').append(text);
+}
+
+function startup() {
+  //document.getElementById('imgpick').addEventListener('change', showPreview, false);
+  document.getElementById('imgupload').addEventListener('click', handleUpload, false);
+}
