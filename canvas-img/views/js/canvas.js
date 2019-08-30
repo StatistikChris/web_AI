@@ -9,17 +9,21 @@ var ctx;
 // load model on starup
 let model;
 (async function () {
-    // ################################################### Caution here when deploying vvvvvvvvvvvvvvv
-    //if(process.env.ENV_APP_ENGINE) {
-    if("{{ env('ENV_APP_ENGINE') }}" == "appengine") {
-        model = await tf.loadLayersModel("https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json");
-    } else {
-        model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+    try {
+        // ################################################### Caution here when deploying vvvvvvvvvvvvvvv
+        //if(process.env.ENV_APP_ENGINE) {
+        if("{{ env('ENV_APP_ENGINE') }}" == "appengine") {
+            model = await tf.loadLayersModel("https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json");
+        } else {
+            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+        }
+        // ################################################### ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        logPrint("# [INFO]: Loading Tensoflow Model ...");
+        logPrint("# [INFO]: done");
+        //$(".progress-bar").hide();
+    }catch{
+        logPrint("# [ERROR]: failed to load model");
     }
-    // ################################################### ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    logPrint("# [INFO]: Loading Tensoflow Model ...");
-    logPrint("\n# [INFO]: done");
-    //$(".progress-bar").hide();
 })();
 
 
@@ -66,16 +70,21 @@ function Draw(x, y, isDown) {
 }
 	
 function clearArea() {
-    logPrint("\n# [INFO]: clearing draw area");
+    logPrint("# [INFO]: clearing draw area");
     // Use the identity matrix while clearing the canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
 const showPreview = function(canvasId) {
-    logPrint("\n# [INFO]: showing preview");
+    logPrint("# [INFO]: showing preview");
     var canvas = document.getElementById(canvasId);
-    var data = canvas.toDataURL("image/png");
+    var data;
+    if (canvas.toDataURL("image/png") == null) {
+        logPrint("# [ERROR]: failed to load canvas image")
+    }else{
+        data = canvas.toDataURL("image/png");
+    }
 
     var image = new Image();
     image.id = "preview-pic";
@@ -85,12 +94,12 @@ const showPreview = function(canvasId) {
 }
 
 function prepareInput() {
-    logPrint("\n# [INFO]: reseizing image...");
+    logPrint("# [INFO]: reseizing image...");
     var newImg = format("myCanvas");
 }   
 
 const logPrint = function(text) {
-    $('#logging-area').append(text);
+    $('#logging-area').append(text + "\n");
 }
 
 const rescaleImage = function(canvasId,dimension=28) {
@@ -104,7 +113,7 @@ const rescaleImage = function(canvasId,dimension=28) {
 
 function buildInference() {
     // just log here and call async function
-    logPrint("\n# [INFO]: building inference...");
+    logPrint("# [INFO]: building inference...");
     infer();
 }
 
@@ -148,7 +157,7 @@ const format = function(canvasId) {
     tempCanvas.height*=pct;
 
 
-    logPrint("\n# [INFO]: formatting image...");
+    logPrint("# [INFO]: formatting image...");
     context.drawImage(tempCanvas,0,0,cw,ch,0,0,cw*pct,ch*pct);
     var newCanvas = document.createElement("canvas");
     var newContext = newCanvas.getContext("2d");
