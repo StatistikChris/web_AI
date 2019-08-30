@@ -4,17 +4,71 @@ html(lang='en')
     title Image Recognition  
     style
       include css/style.css 
-  body!= body  
-    h2 Upload a file
-    //img(src="static/image.png") 
-    p
-      img(src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Pincerno_-_Einkommen_2010.png/800px-Pincerno_-_Einkommen_2010.png", width='400px') 
-    //img.className#IdName(src="/image.png" alt="Image Title")
-    p
-      input(
-        type="button" 
-        id="imgupload" 
-        value="Upload"
-      )
     script
       include js/script.js 
+  body!= body  
+    div(class="site-border")
+        span(class="site-width")
+        div(class="site-header")
+          h2 Image Recognition Inference
+        div(class="site-midarea")
+          div(class="canvas-box")
+            
+          div(class="ctrl-box")
+            input(
+              type="button" 
+              id="clearArea" 
+              value="Clear Area"
+              onclick="javascript:clearArea();return false;"
+            )
+            // hidden options (see css)
+            select(id="selWidth")
+              option(value="3") 3
+              option(value="11") 11
+              option(value="13") 13
+              option(value="15") 15
+              option(value="17") 17
+              option(value="19",selected="selected") 19
+            
+            select(id="selColor")
+              option(value="black",selected="selected") black
+            input(
+              type="button" 
+              id="prepareInput" 
+              value="Prepare"
+              onclick="prepareInput()"
+            )
+            input(
+              type="button" 
+              id="buildInference" 
+              value="Infer"
+              onclick="javascript:buildInference();"
+            )
+            div(class="output-container")
+              div(class="output-log")
+                textarea(class="logging-area",id="logging-area",style="width: 350px; height: 120px;",align="bottom",readonly)
+              div(class="output-preview")
+                div(id="preview")
+        div(class="site-out-box")
+
+          // TODO: remove old output tag and js functions
+          div(class="output") 
+          div(id="preview-container")  
+          div(class="prediction")
+             ol(id="prediction-list")
+        div(class="site-footer")
+          div(class="pfooter")
+            p about | contact    
+        h2 Upload a file
+        //img(src="static/image.png") 
+        p
+          
+          // img(src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Pincerno_-_Einkommen_2010.png/800px-Pincerno_-_Einkommen_2010.png", width='400px') 
+        //img.className#IdName(src="/image.png" alt="Image Title")
+        p
+          input(
+            type="button" 
+            id="imgupload" 
+            value="Upload"
+          )
+        
