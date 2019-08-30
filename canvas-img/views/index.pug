@@ -17,14 +17,28 @@ html(lang='en')
           h2 Draw a number on the canvas below
         div(class="site-midarea")
           div(class="canvas-box")
+            h3 1. Draw a number on the canvas below
             canvas(id="myCanvas",width="280",height="280",style="border:2px solid black")
-          div(class="ctrl-box")
+            br
             input(
               type="button" 
               id="clearArea" 
               value="Clear Area"
               onclick="javascript:clearArea();return false;"
             )
+          div(class="ctrl-box")
+            h3 2. Rescale and format your input
+            input(
+              type="button" 
+              id="prepareInput" 
+              value="Prepare"
+              onclick="prepareInput()"
+            )
+            div(class="output-container")
+              div(class="output-log")
+                textarea(class="logging-area",id="logging-area",style="width: 350px; height: 120px;",align="bottom",readonly)
+              div(class="output-preview")
+                div(id="preview")
             // hidden options (see css)
             select(id="selWidth")
               option(value="3") 3
@@ -33,33 +47,22 @@ html(lang='en')
               option(value="15") 15
               option(value="17") 17
               option(value="19",selected="selected") 19
-            
             select(id="selColor")
               option(value="black",selected="selected") black
-            input(
-              type="button" 
-              id="prepareInput" 
-              value="Prepare"
-              onclick="prepareInput()"
-            )
-            input(
-              type="button" 
-              id="buildInference" 
-              value="Infer"
-              onclick="javascript:buildInference();"
-            )
-            div(class="output-container")
-              div(class="output-log")
-                textarea(class="logging-area",id="logging-area",style="width: 350px; height: 120px;",align="bottom",readonly)
-              div(class="output-preview")
-                div(id="preview")
         div(class="site-out-box")
-
+          h3 3. Infer result from pre-trained neural network
+          input(
+            type="button" 
+            id="buildInference" 
+            value="Infer"
+            onclick="javascript:buildInference();"
+          )
           // TODO: remove old output tag and js functions
           div(class="output") 
           div(id="preview-container")  
           div(class="prediction")
-             ol(id="prediction-list")
+            div(id="prediction-title")
+            ol(id="prediction-list")
         div(class="site-footer")
           div(class="pfooter")
             p about | contact

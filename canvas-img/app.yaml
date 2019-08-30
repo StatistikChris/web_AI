@@ -6,3 +6,6 @@ handlers:
 
   - url: /.*
     script: auto
+
+env_variables:
+  ENV_APP_ENGINE: "appengine"
