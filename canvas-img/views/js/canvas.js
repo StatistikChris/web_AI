@@ -11,7 +11,6 @@ let model;
 (async function () {
     try {
         // ################################################### Caution here when deploying vvvvvvvvvvvvvvv
-        //if(process.env.ENV_APP_ENGINE) {
         if("{{ env('ENV_APP_ENGINE') }}" == "appengine") {
             model = await tf.loadLayersModel("https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json");
         } else {
@@ -19,10 +18,9 @@ let model;
         }
         // ################################################### ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         logPrint("# [INFO]: Loading Tensoflow Model ...");
-        logPrint("# [INFO]: done");
-        //$(".progress-bar").hide();
+        //logPrint("# [INFO]: done");
     }catch{
-        logPrint("# [ERROR]: failed to load model");
+        logPrint("# [ERROR]: Loading Tensoflow Model failed");
     }
 })();
 
@@ -99,9 +97,15 @@ function prepareInput() {
 }   
 
 const logPrint = function(text) {
-    $('#logging-area').append(text + "\n");
+    if ($('#logging-area').val() == "") {
+        $('#logging-area').append(text);
+    }else{
+        $('#logging-area').append("\n" + text);
+    }
+    $('#logging-area').scrollTop($('#logging-area')[0].scrollHeight);
 }
 
+/*
 const rescaleImage = function(canvasId,dimension=28) {
     var canvas = document.getElementById(canvasId);
     var context = canvas.getContext("2d");
@@ -110,6 +114,7 @@ const rescaleImage = function(canvasId,dimension=28) {
     context.scale(scaleFactor, scaleFactor);
     return context.getImageData(0, 0, canvas.width*scaleFactor, canvas.height*scaleFactor);
 }
+*/
 
 function buildInference() {
     // just log here and call async function
@@ -119,6 +124,11 @@ function buildInference() {
 
 async function infer() {
     var canvas = document.getElementById("preview-pic");
+    if (canvas == null) {
+        logPrint("# [ERROR]: failed to load model");
+        logPrint("# [ERROR]: please check if image was prepared");
+        return;
+    }
     var imgData = new Image()
     imgData.src = canvas.src;
     let image = imgData;
@@ -134,11 +144,11 @@ async function infer() {
     predictions.forEach(function (p) {
         $("#prediction-list").append(`<li>${p}</li>`);
     });
-    logPrint("\n# [INFO]: done");
+    logPrint("# [INFO]: done");
 }
 
 const format = function(canvasId) {
-    var dimension = 28;
+    // var dimension = 28;
     var canvas = document.getElementById(canvasId);
     var context = canvas.getContext("2d");
 
@@ -151,11 +161,8 @@ const format = function(canvasId) {
     tempCanvas.width=cw;
     tempCanvas.height=ch;
 
-    //tmptContext.drawImage(canvas,0,0);
-    
     tempCanvas.width*=pct;
     tempCanvas.height*=pct;
-
 
     logPrint("# [INFO]: formatting image...");
     context.drawImage(tempCanvas,0,0,cw,ch,0,0,cw*pct,ch*pct);
