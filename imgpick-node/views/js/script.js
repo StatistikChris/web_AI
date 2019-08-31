@@ -23,7 +23,11 @@ function post(path, params, method='post') {
 
 function handleUpload(evt) {
   console.log("Trying to post image to cloud functions API");
-  post('https://europe-west1-chris-weather-app-1.cloudfunctions.net/mnist-prediction', {name: 'Johnny Bravo'});
+  //post('https://europe-west1-chris-weather-app-1.cloudfunctions.net/mnist-prediction', {name: 'Johnny Bravo'});
+  var img = document.getElementById("preview-canvas");
+  post('https://localhost:8080/', {
+        type: 'image/png',
+        data: img.dataToUrl()});
   console.log("ok");
 }
 

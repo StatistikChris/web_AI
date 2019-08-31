@@ -1,4 +1,6 @@
 'use strict';
+//import * from 'server/server.js'
+const server = require('./server/server.js');
 
 const express = require('express');
 const app = express();
@@ -13,6 +15,18 @@ app.get('/', (req, res) => {
     .render('index', { 
     	title: 'Upload an Image' 
    	});
+    //.sendFile('/home/lenny/Documents/imgpick-node/index.html')
+    //.end();
+});
+
+app.post('/', (req, res) => {
+  handlePostRequest(req);
+  res
+    .status(200)
+    //.send('<h2>Upload an Image</h2>')
+    .render('index', { 
+      title: 'Upload an Image' 
+    });
     //.sendFile('/home/lenny/Documents/imgpick-node/index.html')
     //.end();
 });
