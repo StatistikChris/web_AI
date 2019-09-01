@@ -22,6 +22,8 @@ html(lang='en')
               onchange="showPreview()"
               accept="image/png"
             )
+            br
+            img(id="preview-canvas",width="300px",border="1px")
           div(class="ctrl-box")
             h3 2. Upload image for inference
             input(
@@ -31,7 +33,6 @@ html(lang='en')
               accept="image/png"
             )
             br
-            img(id="preview-canvas",width="300px",border="1px")
             div(class="output-container")
               div(class="output-log")
                 textarea(class="logging-area",id="logging-area",style="width: 350px; height: 120px;",align="bottom",readonly)
