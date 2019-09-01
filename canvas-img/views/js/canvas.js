@@ -139,16 +139,38 @@ async function infer() {
 
     let predictions = await model.predict(tensor).data();
 
-    $("#prediction-title").append("<br /><p>Result:</p>");
+    // collect top results
+    var encoding = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //const predictions_copy = predictions.flatten();
+    const values = tensor.dataSync();
+    var predictions_copy = Array.from(predictions);
+    
+    // sort numbers numerically
+    predictions_copy.sort(function(a, b){return a-b});
+
+    for(var i = 0; i < 3; i++) {
+        // get top 3 results
+        var top_acc = predictions_copy.pop();
+        var top_pos = predictions.indexOf(top_acc);
+        var top_sgn = encoding.charAt(top_pos);
+        console.log(top_acc);
+        console.log(top_pos);
+        console.log(top_sgn);
+        $("#prediction-tops").append(`<h4>Found <b>'${top_sgn}'</b> with an accuracy of ${top_acc}</h4>`);
+    }
+
+    $("#prediction-title").append("<p>Complete Result:</p>");
     $("#prediction-list").empty();
+    var i = 0;
     predictions.forEach(function (p) {
-        $("#prediction-list").append(`<li>${p}</li>`);
+        $("#prediction-list").append(`<li><b>${encoding.charAt(i)}</b>: ${p}</li>`);
+        i++;
     });
     logPrint("# [INFO]: done");
 }
 
 const format = function(canvasId) {
-    // var dimension = 28;
+    var dimension = 28;
     var canvas = document.getElementById(canvasId);
     var context = canvas.getContext("2d");
 
