@@ -8,11 +8,18 @@ app.set('view engine', 'pug');
 app.use(express.static("./static"));
 
 app.get('/', (req, res) => {
-  res
-    .status(200)
-    .render('index', { 
-    	title: 'Draw a letter' 
-   	});
+	// passing environment for automated deployment selector
+    if(process.env.ENV_APP_ENGINE == "appengine") {
+    	res.status(200)
+	    res.render('index', { 
+	    	env: 'appengine' 
+	   	});
+    }else{
+    	res.status(200)
+    	res.render('index', { 
+	    	env: 'localhost' 
+	   	});
+    }
 });
 
 // Start the server

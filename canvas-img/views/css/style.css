@@ -20,15 +20,16 @@ p {
 }
 textarea { 
     overflow: auto; 
+    position:relative;
     resize: none;
     background: lightgray;
-    margin: 10px;
+    margin-top: 10px;
 } 
 select {
 	display: none; /* globally hide select option fields */
 }
 input {
-	margin: 10px;
+	margin: 0px;
 }
 
 /* dev flexbox definitions */
@@ -82,13 +83,13 @@ input {
 	/* midarea 2 right */
 	border: 1px solid #333;
 	order: 2;
-	
+	padding: 15px;
 }
 
 .site-out-box {
 	border: 1px solid #333;
 	order: 3;
-	
+	padding: 15px;
 }
 
 .site-footer {
