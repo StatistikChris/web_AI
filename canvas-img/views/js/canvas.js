@@ -6,23 +6,37 @@ var mousePressed = false;
 var lastX, lastY;
 var ctx;
 
+const logPrint = function(text) {
+    if ($('#logging-area').val() == "") {
+        $('#logging-area').append(text);
+    }else{
+        $('#logging-area').append("\n" + text);
+    }
+    $('#logging-area').scrollTop($('#logging-area')[0].scrollHeight);
+}
+
 // load model on starup
 let model;
-(async function () {
+async function loadModel() {
     try {
-        // ################################################### Caution here when deploying vvvvvvvvvvvvvvv
-        if("{{ env('ENV_APP_ENGINE') }}" == "appengine") {
-            model = await tf.loadLayersModel("https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json");
-        } else {
-            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
-        }
-        // ################################################### ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        // ### handling environment here vvvvvvvvvvvvvvv
         logPrint("# [INFO]: Loading Tensoflow Model ...");
-        //logPrint("# [INFO]: done");
+        if ($('#env').text() == "appengine") {
+            // load model from here on app engine
+            model = await tf.loadLayersModel("https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json");
+            logPrint("# [INFO]: successfully loaded model data");
+        } else if($('#env').text() == "localhost") {
+            // load model from here on localhost
+            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+            logPrint("# [INFO]: successfully loaded model data");
+        } else {
+            logPrint("# [ERROR]: failed to load Tensoflow model");
+        }
+        // ### ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     }catch{
-        logPrint("# [ERROR]: Loading Tensoflow Model failed");
+        logPrint("# [ERROR]: failed to load Tensoflow model");
     }
-})();
+}
 
 
 function startup() {
@@ -49,6 +63,7 @@ function startup() {
     // add event listener to button:
     document.getElementById('prepareInput').addEventListener('cick', prepareInput, false);
     document.getElementById('buildInference').addEventListener('cick', buildInference, false);
+    loadModel();
 }
 
 function Draw(x, y, isDown) {
@@ -95,15 +110,6 @@ function prepareInput() {
     logPrint("# [INFO]: reseizing image...");
     var newImg = format("myCanvas");
 }   
-
-const logPrint = function(text) {
-    if ($('#logging-area').val() == "") {
-        $('#logging-area').append(text);
-    }else{
-        $('#logging-area').append("\n" + text);
-    }
-    $('#logging-area').scrollTop($('#logging-area')[0].scrollHeight);
-}
 
 /*
 const rescaleImage = function(canvasId,dimension=28) {
