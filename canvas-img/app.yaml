@@ -3,7 +3,10 @@ runtime: nodejs10
 handlers:
   - url: /static
     static_dir: public
-
+    http_headers:
+      Access-Control-Allow-Origin: "*"
+      mode: 'no-cors'
+      
   - url: /.*
     script: auto
 

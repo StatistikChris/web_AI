@@ -1,0 +1,11 @@
+[
+    {
+      "origin": ["http://lsd-canvas-img.appspot.com"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD", "DELETE"],
+      "mode": "no-cors",
+      "Access-Control-Allow-Origin": "*",
+      "maxAgeSeconds": 3600
+    }
+]
+

@@ -11,6 +11,10 @@ app.get('/', (req, res) => {
 	// passing environment for automated deployment selector
     if(process.env.ENV_APP_ENGINE == "appengine") {
     	res.status(200)
+    	res.set({
+    				'Access-Control-Allow-Origin': '*',
+    				'mode': 'no-cors'
+				});
 	    res.render('index', { 
 	    	env: 'appengine' 
 	   	});
