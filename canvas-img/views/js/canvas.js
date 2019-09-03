@@ -32,7 +32,7 @@ async function loadModel() {
             logPrint("# [INFO]: successfully loaded model data");
         } else if($('#env').text() == "localhost") {
             // load model from here on localhost
-            model = await tf.loadLayersModel("https://localhost:8080/tfjs-models/mnist/model.json");
+            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
             logPrint("# [INFO]: successfully loaded model data");
         } else {
             logPrint("# [ERROR]: failed to load Tensoflow model");
@@ -143,6 +143,7 @@ async function infer() {
     var imgData = new Image()
     imgData.src = canvas.src;
     let image = imgData;
+    console.log(image);
     let tensor = tf.browser.fromPixels(image,numChannels=1)
                   .resizeNearestNeighbor([28, 28])
                   .toFloat()
