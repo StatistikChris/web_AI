@@ -30,6 +30,7 @@ select {
 }
 input {
 	margin: 0px;
+	margin-right: 15px;
 }
 
 /* dev flexbox definitions */
@@ -69,19 +70,19 @@ input {
 	flex-wrap: nowrap;
 	justify-content: center;
 	align-items: stretch;
-	align-content: center;
+	align-content: stretch;
 	border: 1px solid #333;
 }
 .canvas-box {
 	/* midarea 1 left */
-	border: 1px solid #333;
+	/*border: 1px solid #333;*/
 	order: 1;
-	flex: 0 1 400px;
+	flex: 0 1 320px;
 	padding: 15px;
 }
 .ctrl-box {
 	/* midarea 2 right */
-	border: 1px solid #333;
+	/*border: 1px solid #333;*/
 	order: 2;
 	padding: 15px;
 }
@@ -90,7 +91,28 @@ input {
 	border: 1px solid #333;
 	order: 3;
 	padding: 15px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: stretch;
+	align-items: stretch;
+	align-content: space-around;
 }
+
+.output-container {
+	/* site-out-box 1 left */
+	order: 1;
+	padding: 0px;
+	flex: 0 1 500px;
+}
+
+.output-preview {
+	/* site-out-box 2 right */
+	order: 2;
+	padding-left: 20px;
+	flex: 0 1 100px;	
+}
+
 
 .site-footer {
 	border: 1px solid #333;

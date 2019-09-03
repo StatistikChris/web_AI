@@ -104,8 +104,14 @@ const showPreview = function(canvasId) {
         data = canvas.toDataURL("image/png");
     }
 
+    // print headline:
+    document.getElementById("preview-headline").innerHTML = "Preview:";
+    document.getElementById("preview-headline").style.marginBottom = "10px";
+
+
     var image = new Image();
     image.id = "preview-pic";
+    image.border = "1px";
     image.width = 70;
     image.src = canvas.toDataURL();
     document.getElementById('preview').appendChild(image);
@@ -115,17 +121,6 @@ function prepareInput() {
     logPrint("# [INFO]: reseizing image...");
     var newImg = format("myCanvas");
 }   
-
-/*
-const rescaleImage = function(canvasId,dimension=28) {
-    var canvas = document.getElementById(canvasId);
-    var context = canvas.getContext("2d");
-    var scaleFactor =  dimension / canvas.width;
-    console.log("scale factor: " + scaleFactor);
-    context.scale(scaleFactor, scaleFactor);
-    return context.getImageData(0, 0, canvas.width*scaleFactor, canvas.height*scaleFactor);
-}
-*/
 
 function buildInference() {
     // just log here and call async function
@@ -171,11 +166,14 @@ async function infer() {
         $("#prediction-tops").append(`<h4>Found <b>'${top_sgn}'</b> with an accuracy of ${top_acc}</h4>`);
     }
 
-    $("#prediction-title").append("<p>Complete Result:</p>");
-    $("#prediction-list").empty();
+    // print complete list to logging area
+    // $("#prediction-title").append("<p>Complete Result Classes:</p>");
+    logPrint("[RESULT]: Complete result classes:");
+    //$("#prediction-list").empty();
     var i = 0;
     predictions.forEach(function (p) {
-        $("#prediction-list").append(`<li><b>${encoding.charAt(i)}</b>: ${p}</li>`);
+        //$("#prediction-list").append(`<li><b>${encoding.charAt(i)}</b>: ${p}</li>`);
+        logPrint("[RESULT]: " + encoding.charAt(i) + ": " + p);
         i++;
     });
     logPrint("# [INFO]: done");

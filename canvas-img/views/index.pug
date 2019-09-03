@@ -28,18 +28,20 @@ html(lang='en')
               onclick="javascript:clearArea();return false;"
             )
           div(class="ctrl-box")
-            h3 2. Rescale and format your input
+            h3 2. Format your input and build inference
             input(
               type="button" 
               id="prepareInput" 
               value="Prepare"
               onclick="prepareInput()"
             )
-            div(class="output-container")
-              div(class="output-log")
-                textarea(class="logging-area",id="logging-area",style="width: 350px; height: 120px;",align="bottom",readonly)
-              div(class="output-preview")
-                div(id="preview")
+            input(
+              type="button" 
+              id="buildInference" 
+              value="Infer"
+              onclick="javascript:buildInference();"
+            )
+            div(id="prediction-tops")
             // hidden options (see css)
             select(id="selWidth")
               option(value="3") 3
@@ -51,20 +53,19 @@ html(lang='en')
             select(id="selColor")
               option(value="black",selected="selected") black
         div(class="site-out-box")
-          h3 3. Infer result from pre-trained neural network
-          input(
-            type="button" 
-            id="buildInference" 
-            value="Infer"
-            onclick="javascript:buildInference();"
-          )
-          // TODO: remove old output tag and js functions
-          div(class="output") 
-          div(id="preview-container")  
-          div(class="prediction")
-            div(id="prediction-tops")
-            div(id="prediction-title")
-            ol(id="prediction-list")
+          div(class="output-container")
+            div(class="output-log")
+              p Log Messages:
+              textarea(class="logging-area",id="logging-area",style="width: 500px; height: 200px;",align="bottom",readonly)
+              // TODO: remove old output tag and js functions
+              //div(class="output") 
+              //div(id="preview-container")  
+              //div(class="prediction")
+                //div(id="prediction-title")
+                //ol(id="prediction-list")
+          div(class="output-preview",id="output-preview")
+            p(id="preview-headline")
+            div(id="preview")
         div(class="site-footer")
           div(class="pfooter")
             p about | contact
