@@ -27,12 +27,12 @@ async function loadModel() {
             model = await tf.loadLayersModel(
                 //"https://lsd-canvas-img.appspot.com.storage.cloud.google.com/mnist/model.json",
                 //"http://storage.cloud.google.com/lsd-canvas-img.appspot.com/mnist/model.json",
-                "https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json",
+                "https://lsd-canvas-img.appspot.com/tfjs-models/emnist/model.json",
                 headers="Access-Control-Allow-Origin': '*'");
             logPrint("# [INFO]: successfully loaded model data");
         } else if($('#env').text() == "localhost") {
             // load model from here on localhost
-            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/emnist/model.json");
             logPrint("# [INFO]: successfully loaded model data");
         } else {
             logPrint("# [ERROR]: failed to load Tensoflow model");
