@@ -27,12 +27,12 @@ async function loadModel() {
             model = await tf.loadLayersModel(
                 //"https://lsd-canvas-img.appspot.com.storage.cloud.google.com/mnist/model.json",
                 //"http://storage.cloud.google.com/lsd-canvas-img.appspot.com/mnist/model.json",
-                "https://lsd-canvas-img.appspot.com/tfjs-models/mnist/model.json",
+                "https://lsd-canvas-img.appspot.com/tfjs-models/emnist/model.json",
                 headers="Access-Control-Allow-Origin': '*'");
             logPrint("# [INFO]: successfully loaded model data");
         } else if($('#env').text() == "localhost") {
             // load model from here on localhost
-            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/emnist/model.json");
             logPrint("# [INFO]: successfully loaded model data");
         } else {
             logPrint("# [ERROR]: failed to load Tensoflow model");
@@ -138,7 +138,6 @@ async function infer() {
     var imgData = new Image()
     imgData.src = canvas.src;
     let image = imgData;
-    console.log(image);
     let tensor = tf.browser.fromPixels(image,numChannels=1)
                   .resizeNearestNeighbor([28, 28])
                   .toFloat()
@@ -160,9 +159,6 @@ async function infer() {
         var top_acc = predictions_copy.pop();
         var top_pos = predictions.indexOf(top_acc);
         var top_sgn = encoding.charAt(top_pos);
-        console.log(top_acc);
-        console.log(top_pos);
-        console.log(top_sgn);
         $("#prediction-tops").append(`<h4>Found <b>'${top_sgn}'</b> with an accuracy of ${top_acc}</h4>`);
     }
 
