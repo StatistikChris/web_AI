@@ -32,7 +32,7 @@ async function loadModel() {
             logPrint("# [INFO]: successfully loaded model data");
         } else if($('#env').text() == "localhost") {
             // load model from here on localhost
-            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/emnist/model.json");
+            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
             logPrint("# [INFO]: successfully loaded model data");
         } else {
             logPrint("# [ERROR]: failed to load Tensoflow model");
@@ -86,7 +86,7 @@ function Draw(x, y, isDown) {
     lastX = x; lastY = y;
     //console.log("x,y " + x + ", " + y)
 }
-	
+
 function clearArea() {
     logPrint("# [INFO]: clearing draw area");
     // Use the identity matrix while clearing the canvas
@@ -120,7 +120,7 @@ const showPreview = function(canvasId) {
 function prepareInput() {
     logPrint("# [INFO]: reseizing image...");
     var newImg = format("myCanvas");
-}   
+}
 
 function buildInference() {
     // just log here and call async function
@@ -131,13 +131,20 @@ function buildInference() {
 async function infer() {
     var canvas = document.getElementById("preview-pic");
     if (canvas == null) {
-        logPrint("# [ERROR]: failed to load model");
+        logPrint("# [ERROR]: inference failed");
         logPrint("# [ERROR]: please check if image was prepared");
         return;
     }
-    var imgData = new Image()
-    imgData.src = canvas.src;
-    let image = imgData;
+    // var imgData = new Image()
+    // imgData.src = canvas.src;
+    // let image = imgData;
+
+    canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext('2d');
+    var image = ctx.getImageData(0, 0, canvas.height, canvas.width);
+
+    console.log(tf.browser.fromPixels(image,numChannels=1))
+
     let tensor = tf.browser.fromPixels(image,numChannels=1)
                   .resizeNearestNeighbor([28, 28])
                   .toFloat()
@@ -150,7 +157,7 @@ async function infer() {
     //const predictions_copy = predictions.flatten();
     const values = tensor.dataSync();
     var predictions_copy = Array.from(predictions);
-    
+
     // sort numbers numerically
     predictions_copy.sort(function(a, b){return a-b});
 
@@ -182,7 +189,7 @@ const format = function(canvasId) {
 
     var tempCanvas = document.createElement("canvas");
     var tmptContext = tempCanvas.getContext("2d");
-    
+
     var pct = dimension / canvas.width; // e.g. 28 / 280 = 0.1 scale factor
     var cw=canvas.width;
     var ch=canvas.height;
@@ -200,4 +207,3 @@ const format = function(canvasId) {
 
     showPreview(canvasId);
 }
-
