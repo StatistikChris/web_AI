@@ -27,12 +27,13 @@ async function loadModel() {
             model = await tf.loadLayersModel(
                 //"https://lsd-canvas-img.appspot.com.storage.cloud.google.com/mnist/model.json",
                 //"http://storage.cloud.google.com/lsd-canvas-img.appspot.com/mnist/model.json",
-                "https://lsd-canvas-img.appspot.com/tfjs-models/emnist/model.json",
+                //"https://lsd-canvas-img.appspot.com/tfjs-models/emnist/model.json",
+                "https://lsd-canvas-img.appspot.com/tfjs-models/emnist_take3/model.json",
                 headers="Access-Control-Allow-Origin': '*'");
             logPrint("# [INFO]: successfully loaded model data");
         } else if($('#env').text() == "localhost") {
             // load model from here on localhost
-            model = await tf.loadLayersModel("http://localhost:8080/tfjs-models/mnist/model.json");
+            model = await tf.loadLayersModel("http://localhost:8080//tfjs-models/mnist_orig/model.json");
             logPrint("# [INFO]: successfully loaded model data");
         } else {
             logPrint("# [ERROR]: failed to load Tensoflow model");
@@ -135,20 +136,21 @@ async function infer() {
         logPrint("# [ERROR]: please check if image was prepared");
         return;
     }
-    // var imgData = new Image()
-    // imgData.src = canvas.src;
-    // let image = imgData;
 
-    canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext('2d');
-    var image = ctx.getImageData(0, 0, canvas.height, canvas.width);
+    var imgData = new Image()
+    imgData.src = canvas.src;
 
-    console.log(tf.browser.fromPixels(image,numChannels=1))
 
-    let tensor = tf.browser.fromPixels(image,numChannels=1)
+    let image = imgData;
+    let tensor = tf.browser.fromPixels(image,numChannels=4)
                   .resizeNearestNeighbor([28, 28])
+                  //.as1D()
+                  //.reshape([28*28,4])
+                  .slice([0,0,3], [28,28,1])
                   .toFloat()
                   .expandDims();
+
+
 
     let predictions = await model.predict(tensor).data();
 
@@ -170,16 +172,19 @@ async function infer() {
     }
 
     // print complete list to logging area
-    // $("#prediction-title").append("<p>Complete Result Classes:</p>");
+    $("#prediction-title").append("<p>Complete Result Classes:</p>");
     logPrint("[RESULT]: Complete result classes:");
-    //$("#prediction-list").empty();
+    $("#prediction-list").empty();
     var i = 0;
     predictions.forEach(function (p) {
-        //$("#prediction-list").append(`<li><b>${encoding.charAt(i)}</b>: ${p}</li>`);
+        $("#prediction-list").append(`<li><b>${encoding.charAt(i)}</b>: ${p}</li>`);
         logPrint("[RESULT]: " + encoding.charAt(i) + ": " + p);
         i++;
     });
     logPrint("# [INFO]: done");
+    //logPrint(values.length);
+    //logPrint(tensor.shape);
+    //logPrint(values);
 }
 
 const format = function(canvasId) {
