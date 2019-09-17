@@ -28,7 +28,7 @@ async function loadModel() {
                 //"https://lsd-canvas-img.appspot.com.storage.cloud.google.com/mnist/model.json",
                 //"http://storage.cloud.google.com/lsd-canvas-img.appspot.com/mnist/model.json",
                 //"https://lsd-canvas-img.appspot.com/tfjs-models/emnist/model.json",
-                "https://lsd-canvas-img.appspot.com/tfjs-models/emnist_take3/model.json",
+                "https://lsd-canvas-img.appspot.com/tfjs-models/mnist_orig/model.json",
                 headers="Access-Control-Allow-Origin': '*'");
             logPrint("# [INFO]: successfully loaded model data");
         } else if($('#env').text() == "localhost") {
