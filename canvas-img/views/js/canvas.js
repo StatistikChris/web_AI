@@ -33,7 +33,7 @@ async function loadModel() {
             logPrint("# [INFO]: successfully loaded model data");
         } else if($('#env').text() == "localhost") {
             // load model from here on localhost
-            model = await tf.loadLayersModel("http://localhost:8080//tfjs-models/mnist_orig/model.json");
+            model = await tf.loadLayersModel("http://localhost:8080//tfjs-models/emnist_take3/model.json");
             logPrint("# [INFO]: successfully loaded model data");
         } else {
             logPrint("# [ERROR]: failed to load Tensoflow model");
